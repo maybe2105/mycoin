@@ -11,6 +11,11 @@ const WalletContext = React.createContext({});
 const WalletProvider = ({ children }) => {
   const [wallet, setWallet] = React.useState(null);
   const [balance, setBalance] = React.useState(null);
+  const [history, setHistory] = React.useState([]);
+  console.log(
+    "🚀 ~ file: WalletContext.jsx ~ line 15 ~ WalletProvider ~ history",
+    history
+  );
 
   React.useEffect(() => {
     if (wallet) {
@@ -30,6 +35,26 @@ const WalletProvider = ({ children }) => {
             const balanceInEth = ethers.utils.formatEther(res.data.result);
             setBalance(balanceInEth);
             localStorage.setItem("wallet", JSON.stringify(wallet));
+          });
+
+        axios
+          .get(
+            `https://api-rinkeby.etherscan.io/api?module=account&action=txlist&address=${
+              wallet.address
+            }&startblock=0&endblock=99999999&sort=asc&apikey=${
+              import.meta.env.VITE_ETHERSCAN_API
+            }`
+            // `https://api-rinkeby.etherscan.io/api?module=account&action=txlist&address=${
+            //   wallet.address
+            // }&startblock=0&endblock=99999999&sort=asc&apikey=${
+            //   import.meta.env.VITE_ETHERSCAN_API
+            // }`
+          )
+          .then((res) => {
+            setHistory(res.data.result);
+            //   const balanceInEth = ethers.utils.formatEther(balance);
+            //   setBalance(balanceInEth);
+            //   localStorage.setItem("wallet", JSON.stringify(wallet));
           });
       } catch (e) {}
     }
@@ -53,7 +78,9 @@ const WalletProvider = ({ children }) => {
   );
 
   return (
-    <WalletContext.Provider value={{ wallet, setWallet, balance, sendEth }}>
+    <WalletContext.Provider
+      value={{ wallet, setWallet, balance, sendEth, history }}
+    >
       {children}
     </WalletContext.Provider>
   );

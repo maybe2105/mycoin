@@ -9,6 +9,7 @@ import ImportPage from "./components/ImportPage";
 import WalletProvider from "./context/WalletContext";
 import HomePage from "./components/HomePage";
 import SendPage from "./components/SendPage";
+import HistoryPage from "./components/HistoryPage";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/import" element={<ImportPage />}></Route>
             <Route path="/home" element={<HomePage />}></Route>
             <Route path="/send" element={<SendPage />}></Route>
+            <Route path="/history" element={<HistoryPage />} />
           </Routes>
         </BrowserRouter>
       </WalletProvider>

@@ -24,23 +24,6 @@ const HomePage = () => {
         setWallet(__wallet);
       } else navigate(`/`, { replace: true });
     }
-
-    if (wallet) {
-      axios
-        .get(
-          `https://api.etherscan.io/api?module=account&action=txlistinternal&address=${
-            wallet.address
-          }&startblock=0&endblock=99999999&sort=asc&apikey=${
-            import.meta.env.VITE_ETHERSCAN_API
-          }`
-        )
-        .then((res) => {
-          console.log(res);
-          //   const balanceInEth = ethers.utils.formatEther(balance);
-          //   setBalance(balanceInEth);
-          //   localStorage.setItem("wallet", JSON.stringify(wallet));
-        });
-    }
   }, [wallet]);
 
   return (
@@ -70,7 +53,13 @@ const HomePage = () => {
           Send ETH
         </Button>
         <Box className="df" mt={3}>
-          <Button fullWidth className="btn-hover color-11">
+          <Button
+            fullWidth
+            className="btn-hover color-11"
+            onClick={() => {
+              navigate("/history");
+            }}
+          >
             History
           </Button>
           <Box width={24} />
