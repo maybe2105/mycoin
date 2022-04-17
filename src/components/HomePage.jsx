@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { ethers } from "ethers";
 
 const HomePage = () => {
-  const { wallet, balance, setWallet } = useWallet();
+  const { wallet, balance, setWallet, loadBalance } = useWallet();
 
   const navigate = useNavigate();
 
@@ -23,6 +23,8 @@ const HomePage = () => {
 
         setWallet(__wallet);
       } else navigate(`/`, { replace: true });
+    } else {
+      loadBalance();
     }
   }, [wallet]);
 

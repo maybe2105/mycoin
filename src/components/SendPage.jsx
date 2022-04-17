@@ -15,7 +15,7 @@ import PageLayout from "../layout/PageLayout";
 import "../styles/home.scss";
 
 const SendPage = () => {
-  const { wallet, sendEth } = useWallet();
+  const { wallet, sendEth, loadBalance } = useWallet();
   const navigate = useNavigate();
   React.useEffect(() => {
     if (!wallet) {
@@ -119,6 +119,7 @@ const SendPage = () => {
                   if (result.hash) {
                     setTxObject(result);
                     setStep(1);
+                    loadBalance();
                   } else {
                     console.log(result);
                   }
